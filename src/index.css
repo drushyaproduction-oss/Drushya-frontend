@@ -1,0 +1,75 @@
+@import url("https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap");
+@import "primereact/resources/themes/lara-dark-indigo/theme.css";
+@import "primereact/resources/primereact.min.css";
+@import "primeicons/primeicons.css";
+@import "tailwindcss";
+
+@theme {
+  --font-sans:
+    "Outfit", ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji",
+    "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+}
+
+body {
+  font-family: "Outfit", sans-serif;
+}
+
+/* Custom PrimeReact Carousel Styles for Full Screen Hero */
+.hero-carousel,
+.hero-carousel .p-carousel-content,
+.hero-carousel .p-carousel-container,
+.hero-carousel .p-carousel-item {
+  height: 100%;
+}
+
+.hero-carousel .p-carousel-indicators {
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 40;
+  padding: 0;
+  margin: 0;
+}
+
+.hero-carousel .p-carousel-indicator button {
+  background-color: rgba(255, 255, 255, 0.5);
+  border-radius: 50%;
+  width: 12px;
+  height: 12px;
+}
+
+.hero-carousel .p-carousel-indicator.p-highlight button {
+  background-color: #fbbf24; /* Tailwind yellow-400 */
+}
+
+/* Hide scrollbar globally */
+::-webkit-scrollbar {
+  display: none; /* Chrome, Safari and Opera */
+}
+
+html,
+body {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+/* Marquee Animation */
+@keyframes scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(calc(-33.333%));
+  }
+}
+
+.animate-marquee {
+  animation: scroll 40s linear infinite;
+  display: flex;
+  width: max-content;
+}
+
+.animate-marquee:hover {
+  animation-play-state: paused;
+}
