@@ -59,7 +59,7 @@ const Contact = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     
-    if (!formData.firstName || !formData.email || !formData.mobile || !formData.subject || !formData.message) {
+    if (!formData.firstName || !formData.email || !formData.mobile || !formData.studioLocation || !formData.message) {
       setSubmitStatus({ type: 'error', message: 'Please fill in all required fields.' });
       return;
     }
@@ -257,7 +257,7 @@ const Contact = () => {
               </div>
               
               <div className="space-y-2">
-                <label className="text-sm text-gray-700 font-medium">Service of Interest *</label>
+                <label className="text-sm text-gray-700 font-medium">Service of Interest (Optional)</label>
                 <select 
                   name="subject"
                   value={formData.subject}
