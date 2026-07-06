@@ -10,9 +10,9 @@ const Footer = () => {
         {/* Brand Section */}
         <div className="flex flex-col items-start justify-start">
           <div className="font-bold text-2xl tracking-widest leading-none flex items-center uppercase text-black">
-            DRUSHYA'S
+            DRUSHYA
           </div>
-          <span className="text-black text-[0.6rem] tracking-[0.3em] font-light mt-1 ml-1 uppercase">PRODUCTION</span>
+          <span className="text-black text-[0.6rem] tracking-[0.3em] font-light mt-1 ml-1 uppercase">PRODUCTIONS</span>
           <p className="mt-5 text-gray-600 text-sm leading-relaxed max-w-sm">
             Capturing your most precious moments. Let us tell your story through our lens with passion and creativity.
           </p>

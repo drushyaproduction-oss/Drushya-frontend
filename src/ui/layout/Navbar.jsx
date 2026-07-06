@@ -61,9 +61,9 @@ const Navbar = () => {
       {/* Logo */}
       <div className="flex flex-col items-start justify-center cursor-pointer">
         <Link to="/" className="text-yellow-400 font-bold text-2xl tracking-widest leading-none flex items-center uppercase">
-          DRUSHYA'S
+          DRUSHYA
         </Link>
-        <span className="text-yellow-400 text-[0.6rem] tracking-[0.3em] font-light mt-1 ml-1 uppercase">PRODUCTION</span>
+        <span className="text-yellow-400 text-[0.6rem] tracking-[0.3em] font-light mt-1 ml-1 uppercase">PRODUCTIONS</span>
       </div>
 
       {/* Center Navigation - Desktop */}
