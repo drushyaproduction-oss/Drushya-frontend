@@ -170,6 +170,7 @@ const Packages = () => {
                   buttonText="View Details"
                   secondaryButtonText="Gallery"
                   secondaryLink={`/gallery/${pkg.subCategoryId || pkg.serviceId}`}
+                  isTrending={pkg.isTrending}
                 />
               );
             })}
