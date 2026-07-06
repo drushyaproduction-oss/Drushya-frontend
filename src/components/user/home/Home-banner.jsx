@@ -112,6 +112,7 @@ const HomeBanner = () => {
               thumbnail={getImageUrl(service.thumbnail)}
               link={`/services/${categories.find(c => c._id === service.categoryId)?.slug || ""}`}
               buttonText="Learn More"
+              isTrending={true}
             />
           ))}
         </div>
@@ -149,6 +150,7 @@ const HomeBanner = () => {
                   buttonText="View Details"
                   secondaryButtonText="Gallery"
                   secondaryLink={`/gallery/${pkg.subCategoryId || pkg.serviceId}`}
+                  isTrending={pkg.isTrending}
                 />
               ))}
             </div>

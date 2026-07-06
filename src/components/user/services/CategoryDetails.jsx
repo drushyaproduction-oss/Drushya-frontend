@@ -97,7 +97,8 @@ const CategoryDetails = () => {
                 link={`/packages/service/${service._id}`}
                 buttonText="View Packages"
                 secondaryButtonText="Gallery"
-                secondaryLink={`/gallery/${service._id}`} // Or maybe we can link directly to the service detail page later
+                secondaryLink={`/gallery/${service._id}`}
+                isTrending={service.isTrending}
               />
             ))}
           </div>
