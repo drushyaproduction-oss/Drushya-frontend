@@ -13,6 +13,7 @@ const Gallery = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [relatedServices, setRelatedServices] = useState([]);
+  const [fullscreenImageIndex, setFullscreenImageIndex] = useState(null);
 
   useEffect(() => {
     const fetchService = async () => {
@@ -43,6 +44,33 @@ const Gallery = () => {
         fetchService();
     }
   }, [id]);
+
+  const gridImagesCount = service?.gallery?.length || 0;
+
+  const closeFullscreen = () => {
+    setFullscreenImageIndex(null);
+    document.body.style.overflow = '';
+  };
+
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (fullscreenImageIndex === null) return;
+      if (e.key === 'Escape') {
+        setFullscreenImageIndex(null);
+        document.body.style.overflow = '';
+      }
+      if (e.key === 'ArrowRight') setFullscreenImageIndex((prev) => (prev + 1) % gridImagesCount);
+      if (e.key === 'ArrowLeft') setFullscreenImageIndex((prev) => (prev - 1 + gridImagesCount) % gridImagesCount);
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [fullscreenImageIndex, gridImagesCount]);
+
+  useEffect(() => {
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, []);
 
   if (loading) {
     return (
@@ -96,6 +124,21 @@ const Gallery = () => {
         </div>
       </div>
     );
+  };
+
+  const openFullscreen = (index) => {
+    setFullscreenImageIndex(index);
+    document.body.style.overflow = 'hidden';
+  };
+
+  const nextImage = (e) => {
+    if (e) e.stopPropagation();
+    setFullscreenImageIndex((prevIndex) => (prevIndex + 1) % gridImages.length);
+  };
+
+  const prevImage = (e) => {
+    if (e) e.stopPropagation();
+    setFullscreenImageIndex((prevIndex) => (prevIndex - 1 + gridImages.length) % gridImages.length);
   };
 
   return (
@@ -167,7 +210,13 @@ const Gallery = () => {
         {gridImages.length > 0 ? (
           <div className="columns-1 sm:columns-2 md:columns-3 lg:columns-4 gap-6">
             {gridImages.map((src, index) => (
-              <div key={`img-${index}`} className="break-inside-avoid mb-6 rounded-xl overflow-hidden group cursor-pointer shadow-sm hover:shadow-xl transition-all duration-300" data-aos="fade-up" data-aos-delay={(index % 4) * 100}>
+              <div 
+                key={`img-${index}`} 
+                className="break-inside-avoid mb-6 rounded-xl overflow-hidden group cursor-pointer shadow-sm hover:shadow-xl transition-all duration-300" 
+                data-aos="fade-up" 
+                data-aos-delay={(index % 4) * 100}
+                onClick={() => openFullscreen(index)}
+              >
                 <img
                   src={src}
                   alt={`${service.name} gallery ${index + 1}`}
@@ -206,6 +255,51 @@ const Gallery = () => {
                 secondaryLink={`/gallery/${relService._id}`}
               />
             ))}
+          </div>
+        </div>
+      )}
+
+      {/* Fullscreen Lightbox Modal */}
+      {fullscreenImageIndex !== null && (
+        <div 
+          className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-black/95 backdrop-blur-md"
+          onClick={closeFullscreen}
+        >
+          {/* Main Image */}
+          <div className="relative w-full h-[85vh] flex items-center justify-center p-4 md:p-8">
+            <img
+              src={gridImages[fullscreenImageIndex]}
+              alt={`Fullscreen ${fullscreenImageIndex + 1}`}
+              className="max-w-full max-h-full object-contain rounded-md select-none"
+              onClick={(e) => e.stopPropagation()}
+            />
+          </div>
+
+          {/* Bottom Controls */}
+          <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex items-center gap-6" onClick={(e) => e.stopPropagation()}>
+            <button 
+              onClick={prevImage}
+              className="w-12 h-12 flex items-center justify-center rounded-full bg-white text-gray-900 hover:bg-gray-200 transition-colors shadow-lg"
+              aria-label="Previous image"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+            </button>
+
+            <button 
+              onClick={closeFullscreen}
+              className="w-12 h-12 flex items-center justify-center rounded-full bg-white text-gray-900 hover:bg-gray-200 transition-colors shadow-lg"
+              aria-label="Close fullscreen"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </button>
+
+            <button 
+              onClick={nextImage}
+              className="w-12 h-12 flex items-center justify-center rounded-full bg-white text-gray-900 hover:bg-gray-200 transition-colors shadow-lg"
+              aria-label="Next image"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            </button>
           </div>
         </div>
       )}
