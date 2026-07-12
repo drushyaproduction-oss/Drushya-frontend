@@ -49,6 +49,7 @@ const Workspace = () => {
   const [gallery, setGallery] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [bannerImages, setBannerImages] = useState([]);
+  const [selectedImage, setSelectedImage] = useState(null);
 
   useEffect(() => {
     AOS.init({ duration: 1000 });
@@ -137,7 +138,10 @@ const Workspace = () => {
               data-aos="fade-up"
               data-aos-delay={index * 100}
             >
-              <div className="relative h-72 w-full overflow-hidden bg-gray-200">
+              <div 
+                className="relative h-72 w-full overflow-hidden bg-gray-200 cursor-pointer"
+                onClick={() => setSelectedImage(getImageUrl(item.imageUrl))}
+              >
                 <img 
                   src={getImageUrl(item.imageUrl)} 
                   alt={item.title} 
@@ -158,6 +162,27 @@ const Workspace = () => {
           </div>
         )}
       </div>
+
+      {/* Fullscreen Image Modal */}
+      {selectedImage && (
+        <div 
+          className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/95 p-4 cursor-zoom-out"
+          onClick={() => setSelectedImage(null)}
+        >
+          <button 
+            className="absolute top-6 right-6 text-white hover:text-yellow-400 text-4xl transition-colors"
+            onClick={(e) => { e.stopPropagation(); setSelectedImage(null); }}
+          >
+            &times;
+          </button>
+          <img 
+            src={selectedImage} 
+            alt="Fullscreen view" 
+            className="max-w-full max-h-[90vh] object-contain rounded-lg shadow-2xl cursor-default animate-[fadeIn_0.3s_ease-out]"
+            onClick={(e) => e.stopPropagation()}
+          />
+        </div>
+      )}
     </div>
   );
 };

@@ -67,12 +67,16 @@ const HomeBanner = () => {
           className="absolute inset-0 w-full h-full object-cover"
         />
         <div className="absolute inset-0 z-10 flex flex-col items-center justify-center h-full text-white text-center px-4 pt-20 bg-black/30 pointer-events-none" data-aos="zoom-in" data-aos-duration="1000">
-          <h1 className="text-5xl md:text-7xl font-bold mb-6 tracking-widest uppercase text-yellow-400 drop-shadow-2xl">
-            {item.title || 'Capture The Moment'}
-          </h1>
-          <p className="text-xl md:text-2xl max-w-2xl font-light drop-shadow-lg text-gray-100">
-            {item.subtitle || 'Professional photography services for your most precious memories.'}
-          </p>
+          {item.title && (
+            <h1 className="text-5xl md:text-7xl font-bold mb-6 tracking-widest uppercase text-yellow-400 drop-shadow-2xl">
+              {item.title}
+            </h1>
+          )}
+          {item.subtitle && (
+            <p className="text-xl md:text-2xl max-w-2xl font-light drop-shadow-lg text-gray-100">
+              {item.subtitle}
+            </p>
+          )}
         </div>
       </div>
     );

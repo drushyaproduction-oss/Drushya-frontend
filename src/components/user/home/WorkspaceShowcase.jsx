@@ -5,6 +5,7 @@ import { fetchWorkspacesApi } from '../../../api/workspace';
 
 const WorkspaceShowcase = () => {
   const [gallery, setGallery] = useState([]);
+  const [selectedImage, setSelectedImage] = useState(null);
 
   useEffect(() => {
     const loadWorkspaces = async () => {
@@ -76,9 +77,10 @@ const WorkspaceShowcase = () => {
               {gallery.map((item, index) => (
                 <div 
                   key={item.id} 
-                  className={`group relative overflow-hidden rounded-2xl shadow-lg h-72 ${index % 2 !== 0 ? 'md:mt-12' : ''} bg-gray-200`}
+                  className={`group relative overflow-hidden rounded-2xl shadow-lg h-72 ${index % 2 !== 0 ? 'md:mt-12' : ''} bg-gray-200 cursor-pointer`}
                   data-aos="fade-up"
                   data-aos-delay={index * 150}
+                  onClick={() => setSelectedImage(item.thumbnail)}
                 >
                   {item.thumbnail && (
                     <img 
@@ -102,6 +104,27 @@ const WorkspaceShowcase = () => {
           
         </div>
       </div>
+
+      {/* Fullscreen Image Modal */}
+      {selectedImage && (
+        <div 
+          className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/95 p-4 cursor-zoom-out"
+          onClick={() => setSelectedImage(null)}
+        >
+          <button 
+            className="absolute top-6 right-6 text-white hover:text-yellow-400 text-4xl transition-colors"
+            onClick={(e) => { e.stopPropagation(); setSelectedImage(null); }}
+          >
+            &times;
+          </button>
+          <img 
+            src={selectedImage} 
+            alt="Fullscreen view" 
+            className="max-w-full max-h-[90vh] object-contain rounded-lg shadow-2xl cursor-default animate-[fadeIn_0.3s_ease-out]"
+            onClick={(e) => e.stopPropagation()}
+          />
+        </div>
+      )}
     </div>
   );
 };
