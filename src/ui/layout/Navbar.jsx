@@ -44,17 +44,6 @@ const Navbar = () => {
       : "text-white font-medium hover:text-yellow-400 transition-colors";
   };
 
-  const renderCategoryIcon = (category, imgClass = "w-5 h-5") => {
-    if (category.icon) {
-      return <img src={getImageUrl(category.icon)} alt={category.name} className={`${imgClass} object-contain`} />;
-    }
-    const name = (category.name || "").toLowerCase();
-    if (name.includes('wedding')) return "💍";
-    if (name.includes('corporate') || name.includes('branding')) return "🏢";
-    if (name.includes('advertisement') || name.includes('product') || name.includes('video')) return "🎥";
-    if (name.includes('maternity') || name.includes('portrait') || name.includes('kid')) return "📸";
-    return "✨";
-  };
 
   return (
     <header className={`fixed top-0 left-0 w-full z-50 flex items-center justify-between px-10 transition-all duration-300 ${isScrolled ? 'bg-[#303030] shadow-md py-4' : 'bg-transparent py-6'}`}>
@@ -89,12 +78,10 @@ const Navbar = () => {
                   <Link 
                     key={category._id} 
                     to={`/services/${category.slug}`} 
-                    className="text-white hover:text-yellow-400 hover:bg-black/30 px-4 py-3 rounded-lg transition-colors flex items-center text-sm"
+                    className="group relative text-gray-200 hover:text-yellow-400 hover:bg-black/30 px-4 py-3 rounded-lg transition-all duration-300 flex items-center text-sm overflow-hidden"
                   >
-                    <span className="mr-3 text-lg leading-none flex items-center justify-center">
-                      {renderCategoryIcon(category, "w-5 h-5")}
-                    </span> 
-                    <span>{category.name}</span>
+                    <span className="absolute left-3 w-1.5 h-1.5 rounded-full bg-yellow-400 opacity-0 group-hover:opacity-100 transform -translate-x-4 group-hover:translate-x-0 transition-all duration-300"></span>
+                    <span className="transform translate-x-0 group-hover:translate-x-4 transition-transform duration-300">{category.name}</span>
                   </Link>
                 ))}
                 {categories.length === 0 && (
@@ -144,12 +131,10 @@ const Navbar = () => {
                     key={category._id} 
                     to={`/services/${category.slug}`} 
                     onClick={() => setIsMobileMenuOpen(false)} 
-                    className="text-gray-300 hover:text-yellow-400 text-lg flex items-center"
+                    className="group relative text-gray-300 hover:text-yellow-400 text-lg transition-all duration-300 py-1 flex items-center"
                   >
-                    <span className="mr-3 text-base opacity-70 flex items-center justify-center">
-                      {renderCategoryIcon(category, "w-4 h-4")}
-                    </span>
-                    {category.name}
+                    <span className="absolute left-0 w-1.5 h-1.5 rounded-full bg-yellow-400 opacity-0 group-hover:opacity-100 transform -translate-x-2 group-hover:translate-x-0 transition-all duration-300"></span>
+                    <span className="transform translate-x-0 group-hover:translate-x-4 transition-transform duration-300">{category.name}</span>
                   </Link>
                 ))}
                 {categories.length === 0 && (
